@@ -186,7 +186,7 @@ contract ERC721BasicToken is ERC721Basic {
     address _from,
     address _to,
     uint256 _tokenId,
-    bytes _data
+    bytes memory _data
   )
     public
     canTransfer(_tokenId)
@@ -279,7 +279,7 @@ contract ERC721BasicToken is ERC721Basic {
     address _from,
     address _to,
     uint256 _tokenId,
-    bytes _data
+    bytes memory _data
   )
     internal
     returns (bool)

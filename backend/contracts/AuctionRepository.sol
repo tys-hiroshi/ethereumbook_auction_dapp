@@ -84,7 +84,7 @@ contract AuctionRepository {
     * @dev Gets an array of owned auctions
     * @param _owner address of the auction owner
     */
-    function getAuctionsOf(address _owner) public view returns(uint[]) {
+    function getAuctionsOf(address _owner) public view returns(uint[] memory) {
         uint[] memory ownedAuctions = auctionOwner[_owner];
         return ownedAuctions;
     }
@@ -127,10 +127,10 @@ contract AuctionRepository {
     * @return bool whether the auction is finalized
     */
     function getAuctionById(uint _auctionId) public view returns(
-        string name,
+        string memory name,
         uint256 blockDeadline,
         uint256 startPrice,
-        string metadata,
+        string memory metadata,
         uint256 deedId,
         address deedRepositoryAddress,
         address owner,
@@ -160,7 +160,7 @@ contract AuctionRepository {
     * @param _blockDeadline uint is the timestamp in which the auction expires
     * @return bool whether the auction is created
     */
-    function createAuction(address _deedRepositoryAddress, uint256 _deedId, string _auctionTitle, string _metadata, uint256 _startPrice, uint _blockDeadline) public contractIsDeedOwner(_deedRepositoryAddress, _deedId) returns(bool) {
+    function createAuction(address _deedRepositoryAddress, uint256 _deedId, string memory _auctionTitle, string memory _metadata, uint256 _startPrice, uint _blockDeadline) public contractIsDeedOwner(_deedRepositoryAddress, _deedId) returns(bool) {
         uint auctionId = auctions.length;
         Auction memory newAuction;
         newAuction.name = _auctionTitle;
