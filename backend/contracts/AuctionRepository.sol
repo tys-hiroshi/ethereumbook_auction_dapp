@@ -20,7 +20,7 @@ contract AuctionRepository {
 
     // Bid struct to hold bidder and amount
     struct Bid {
-        address from;
+        address payable from;
         uint256 amount;
     }
 
@@ -201,9 +201,9 @@ contract AuctionRepository {
         if( bidsLength > 0 ) {
             Bid memory lastBid = auctionBids[_auctionId][bidsLength - 1];
             //TODO: AuctionRepository.sol:203:17: TypeError: "send" and "transfer" are only available for objects of type "address payable", not "address".
-            // if(!lastBid.from.send(lastBid.amount)) {
-            //     revert();
-            // }
+            if(!lastBid.from.send(lastBid.amount)) {
+                revert();
+            }
         }
 
         // approve and transfer from this contract to auction owner
@@ -279,9 +279,9 @@ contract AuctionRepository {
         // refund the last bidder
         if( bidsLength > 0 ) {
             //TODO: AuctionRepository.sol:281:17: TypeError: "send" and "transfer" are only available for objects of type "address payable", not "address".
-            // if(!lastBid.from.send(lastBid.amount)) {
-            //     revert();
-            // }  
+            if(!lastBid.from.send(lastBid.amount)) {
+                revert();
+            }  
         }
 
         // insert bid 
