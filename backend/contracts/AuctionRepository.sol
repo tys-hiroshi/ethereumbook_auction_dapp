@@ -60,7 +60,7 @@ contract AuctionRepository {
     /**
     * @dev Disallow payments to this contract directly
     */
-    function() public{
+    function() external{
         revert();
     }
 
@@ -101,7 +101,7 @@ contract AuctionRepository {
             Bid memory lastBid = auctionBids[_auctionId][bidsLength - 1];
             return (lastBid.amount, lastBid.from);
         }
-        return (0, 0);
+        return (0, address(0));
     }
 
     /**
@@ -200,9 +200,10 @@ contract AuctionRepository {
         // if there are bids refund the last bid
         if( bidsLength > 0 ) {
             Bid memory lastBid = auctionBids[_auctionId][bidsLength - 1];
-            if(!lastBid.from.send(lastBid.amount)) {
-                revert();
-            }
+            //TODO: AuctionRepository.sol:203:17: TypeError: "send" and "transfer" are only available for objects of type "address payable", not "address".
+            // if(!lastBid.from.send(lastBid.amount)) {
+            //     revert();
+            // }
         }
 
         // approve and transfer from this contract to auction owner
@@ -232,9 +233,10 @@ contract AuctionRepository {
 
             // 2. the money goes to the auction owner
             Bid memory lastBid = auctionBids[_auctionId][bidsLength - 1];
-            if(!myAuction.owner.send(lastBid.amount)) {
-                revert();
-            }
+            //TODO: AuctionRepository.sol:236:17: TypeError: "send" and "transfer" are only available for objects of type "address payable", not "address".
+            // if(!myAuction.owner.send(lastBid.amount)) {
+            //     revert();
+            // }
 
             // approve and transfer from this contract to the bid winner 
             if(approveAndTransfer(address(this), lastBid.from, myAuction.deedRepositoryAddress, myAuction.deedId)){
@@ -276,9 +278,10 @@ contract AuctionRepository {
 
         // refund the last bidder
         if( bidsLength > 0 ) {
-            if(!lastBid.from.send(lastBid.amount)) {
-                revert();
-            }  
+            //TODO: AuctionRepository.sol:281:17: TypeError: "send" and "transfer" are only available for objects of type "address payable", not "address".
+            // if(!lastBid.from.send(lastBid.amount)) {
+            //     revert();
+            // }  
         }
 
         // insert bid 
